@@ -71,6 +71,9 @@ public class ConsumeDAO extends baseDAO {
 		if(member == null) {//check member exist
 			return false;
 		}
+		if(seat < 1 || seat > show.getSeatNum().intValue()) {//check seat in [1,2,3,...,seat_num]
+			return false;
+		}
 		BigDecimal price = show.getPrice().multiply(BigDecimal.valueOf(1.0 - discount));
 		String sqlInsertTicket = "insert into theatre_ticket.ticket(title,screening,seat,price,member_id,state) values(?,?,?,?,?,1) ";
 		String sqlQueryTicket = "select count(1) from theatre_ticket.ticket where title = ? and screening = ? and seat = ? and (state = 1 or state = 0) ";
